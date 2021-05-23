@@ -16,27 +16,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class LectorCSV {
-
+    
     public ArrayList<Socio> socios = new ArrayList();
     public ArrayList<Club> clubes = new ArrayList();
     public ArrayList<Socio> sociosRiver = new ArrayList();
 
-    public void leerCSV() throws UnsupportedEncodingException {
+    public void leerCSV() throws UnsupportedEncodingException { //con este procedimiento cargamos los datos del csv en la clase Socios y Club
         String archivo = "src\\socios.csv";
         String linea = "";
-
         try {
-
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(archivo), "ISO-8859-1"));
             try {
                 while ((linea = br.readLine()) != null) {
-
-                    /*String stringLegible = new String(linea.getBytes("ISO-8859-1"), "UTF-8");
-                    System.out.println(stringLegible);*/
                     String[] columnas = linea.split(";");
-                    Socio socio = new Socio(columnas[0], parseInt(columnas[1]), columnas[2], columnas[3], columnas[4]);
-                    /* System.out.println(socio.toString());*/
-                    socios.add(socio);
+                    Socio socio = new Socio(columnas[0], parseInt(columnas[1]), columnas[2], columnas[3], columnas[4]);  //aca se ingresan los datos de cada socio , dividiendolos por columnas
+                    socios.add(socio);  //se agrega el socio creado al array que los va a guardar a todos
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -45,13 +39,13 @@ public class LectorCSV {
             ex.printStackTrace();
         }
         Club club = new Club();
-        for (int i = 0; i < club.NOMBRE_CLUBES.length; i++) {
-            this.cargarClub(club.NOMBRE_CLUBES[i]);
+        for (int i = 0; i < club.NOMBRE_CLUBES.length; i++) { // usamos la constante para iterar
+            this.cargarClub(club.NOMBRE_CLUBES[i]);//desde esta parte cargamos los datos de los clubes , llamando a la funcion
         }
 
     }
 
-    public int contadorSocios() {
+    public int contadorSocios() { //aca se cuenta cuantos socios hay en el archivo csv
         int cantidadSocios = 0;
         for (int i = 0; i < socios.size(); i++) {
             cantidadSocios++;
@@ -59,38 +53,25 @@ public class LectorCSV {
         return cantidadSocios;
     }
 
-    public void listado() {
+    public void listado() { //lista los 100 primeros socios con estudios universitarios y casados
         final int CANT_LISTADO = 100;
         Socio sociosCE[] = new Socio[CANT_LISTADO];
-
-        //ArrayList<Socio> sociosCE = new ArrayList();
-        //Socio aux = new Socio();
         int a = 0;
         for (int i = 0; i < socios.size(); i++) {
             if (a < CANT_LISTADO && socios.get(i).getEstadoCivil().equals("Casado") && socios.get(i).getEstudio().equals("Universitario")) {
-                /*  aux.setNombre(socios.get(i).getNombre());
-              aux.setEdad(socios.get(i).getEdad());
-              aux.setClub(socios.get(i).getClub());
-              aux.setEstadoCivil(socios.get(i).getEstadoCivil());
-              aux.setEstudio(socios.get(i).getEstudio()); */
                 sociosCE[a] = socios.get(i);
-                //sociosCE.add(socios.get(i));
                 a++;
             }
 
         }
 
-        Arrays.sort(sociosCE);
+        Arrays.sort(sociosCE); //ordena los socios de menor a mayor segun la edad
         for (int i = 0; i < CANT_LISTADO; i++) {
             System.out.println("NOMBRE: " + sociosCE[i].getNombre() + ", EDAD: " + sociosCE[i].getEdad() + ",EQUIPO: " + sociosCE[i].getClub() + ", CONTADOR: " + (i + 1));
         }
-
-//        for(int i =0; i< 100; i++){
-        //          System.out.println(sociosCE[i]);
-        //   }
     }
 
-    public void cargarClub(String nombreClub) {
+    public void cargarClub(String nombreClub) { //cargamos el club , es llamada por el procedimiento leerCSV 
         Club club = new Club();
         int edadPromedio = 0;
         int edadMinima = 100;
@@ -107,7 +88,7 @@ public class LectorCSV {
                 }
             }
         }
-        club.setNombre(nombreClub);
+        club.setNombre(nombreClub); //cargamos los datos del club
         club.setCantidadSocios(cantSocios);
         club.setPromedioEdad(edadPromedio / cantSocios);
         club.setMenorEdad(edadMinima);
@@ -115,7 +96,7 @@ public class LectorCSV {
         clubes.add(club);
     }
 
-    public void ordenarClubes() {
+    public void ordenarClubes() { //ordena los clubes de menor a mayor segun la cantidad de los socios
         Collections.sort(clubes);
         for (int i = 0; i < clubes.size(); i++) {
             System.out.println("CLUB: " + clubes.get(i).getNombre() + ", CANTIDAD DE SOCIOS: " + clubes.get(i).getCantidadSocios()
@@ -124,7 +105,7 @@ public class LectorCSV {
         }
     }
 
-    public int promedioEdadRacing() {
+    public int promedioEdadRacing() { //saca el promedio de la edad de los socios de racing 
         int promedioRacing = 0;
         for (int i = 0; i < clubes.size(); i++) {
             if (clubes.get(i).getNombre().equals("Racing")) {
@@ -134,68 +115,39 @@ public class LectorCSV {
         return promedioRacing;
     }
 
-    public void nombresRiver() {
+    public void nombresRiver() { //obtengo una sola ves los diferentes nombres que tienen los socios de river (usando un set que no guarda duplicados)
         Set<String> nombresRiver = new HashSet<String>();
         ArrayList<String> nombresRiverCompletos = new ArrayList();
-        int[] cantRepetidos;
-        ArrayList<Socio> nombresRepetidos = new ArrayList();
         for (int i = 0; i < socios.size(); i++) {
             if (socios.get(i).getClub().equals("River")) {
                 nombresRiver.add(socios.get(i).getNombre());
                 nombresRiverCompletos.add(socios.get(i).getNombre());
             }
         }
-        
-        ArrayList<String> nombresAux = new ArrayList();
-        for (String cadena : nombresRiver) {
-            nombresAux.add(cadena);
-        }
-        this.nombresRepetidos(nombresAux, nombresRiverCompletos);
+        ArrayList<String> nombresAux = new ArrayList<>(nombresRiver); //pasamos el set a un arrayList para obtener los datos con un get
+        this.nombresRepetidos(nombresAux, nombresRiverCompletos); //llama al procedimiento para saber que nombres se repitieron mas
+    }
 
-            /*      System.out.println(nombresRiver);
-        for(int i = 0;i < nombresRiver.size();i++){
-            for(int a = 0; a < nombresRiverCompletos.size(); i++){
-                if(nombresRiver.toString())
-            }
-        }
-            
-        
-        /*for(int i= 0; i < sociosRiver.size();i++){
-            contador ++;
-            
-            System.out.println(sociosRiver.get(i) + "Contador: " + contador);
-        }*/
-        }
-    
-    public void nombresRepetidos(ArrayList<String> nombresAux, ArrayList<String> nombresRiverCompletos){
+    public void nombresRepetidos(ArrayList<String> nombresAux, ArrayList<String> nombresRiverCompletos) { //muestra los 5 nombres que mas se repitieron , con la cantidad de veces
         int contador;
         String nomMasRepetido = "";
         int masRepetido = 0;
-        
-        for(int y = 0; y < 5 ; y++){
-        
-          for(int i = 0; i < nombresAux.size(); i++){
-            contador = 0;
-            for(int a = 0; a < nombresRiverCompletos.size(); a++){
-                if(nombresRiverCompletos.get(a).equals(nombresAux.get(i))){
-                    contador ++;
+        for (int y = 0; y < 5; y++) { //lo repite 5 veces asi muestra solo los 5 mas repetidos
+            for (int i = 0; i < nombresAux.size(); i++) {
+                contador = 0;
+                for (int a = 0; a < nombresRiverCompletos.size(); a++) {
+                    if (nombresRiverCompletos.get(a).equals(nombresAux.get(i))) {
+                        contador++;
+                    }
+                }
+                if (contador > masRepetido) {
+                    masRepetido = contador;
+                    nomMasRepetido = nombresAux.get(i);
                 }
             }
- 
-              if(contador > masRepetido){
-              masRepetido = contador;
-              nomMasRepetido = nombresAux.get(i);
-            }
-
-              
-            
-            
+            nombresAux.remove(nomMasRepetido);//se borra el nombre mas repetido asi busca el que le sigue
+            System.out.println("Nombre: " + nomMasRepetido + ", Se repitio: " + masRepetido + " veces.");
+            masRepetido = 0;
+        }
     }
-              nombresAux.remove(nomMasRepetido);
-              System.out.println("Nombre: " + nomMasRepetido + ", Se repitio: " + masRepetido + " veces." );
-              masRepetido = 0; 
-    
-    }
-    }
-    
 }
