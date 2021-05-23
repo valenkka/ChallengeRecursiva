@@ -15,7 +15,18 @@ public class ChallengeRecursiva {
         Scanner entrada = new Scanner(System.in);
         int opcion = 0;     
         LectorCSV lector = new LectorCSV();
-        lector.LeerCSV();
+        lector.leerCSV();
+       /* lector.CargarClub("Boca");
+        lector.CargarClub("River");
+        lector.CargarClub("Newells");
+        lector.CargarClub("Racing");
+        lector.CargarClub("Velez");
+        lector.CargarClub("Huracán");
+        lector.CargarClub("Gimnasia LP");
+        lector.CargarClub("Estudiantes");
+        lector.CargarClub("Independiente");
+        lector.CargarClub("Rosario Central");
+        lector.CargarClub("San Lorenzo");*/
         while(opcion <= 5 && opcion >= 0) {
             System.out.println("--------------------------------------------------------");
             System.out.println("INGRESE 1: Cantidad total de personas registradas.");
@@ -24,27 +35,40 @@ public class ChallengeRecursiva {
                                "Universitarios, ordenadas de menor a mayor según su edad. Por\n" +
                                "cada persona, mostrar: nombre, edad y equipo.");
             System.out.println("INGRESE 4: Un listado con los 5 nombres más comunes entre los hinchas de River.");
-            System.out.println("INGRSE 5: Un listado, ordenado de mayor a menor según la cantidad de\n" +
+            System.out.println("INGRESE 5: Un listado, ordenado de mayor a menor según la cantidad de\n" +
                                 "socios, que enumere, junto con cada equipo, el promedio de edad\n" +
                                 "de sus socios, la menor edad registrada y la mayor edad registrada.");
-            System.out.println("INGRE 6: para salir del menu");
+            System.out.println("INGRESE 6: para salir del menu");
             System.out.println("--------------------------------------------------------");
             opcion = entrada.nextInt();
         
                 switch (opcion) {
                      case 1:
-                        System.out.println("LA CANTIDAD TOTAL DE PERSONAS REGISTRADAS ES DE: " + lector.ContadorSocios());
+                        System.out.println("LA CANTIDAD TOTAL DE PERSONAS REGISTRADAS ES DE: " + lector.contadorSocios() + " Personas.");
                          System.out.println("INGRESE 0: para regresar al menu");
                          opcion = entrada.nextInt();
                         break;
                      case 2:
-                         lector.Listado();
+                         int promedioEdadRacing = lector.promedioEdadRacing();
+                         System.out.println("EL PROMEDIO DE LA EDAD DE LOS SOCIOS DE RACING ES: " + promedioEdadRacing + " años.");
                          System.out.println("INGRESE 0: para regresar al menu");
                          opcion = entrada.nextInt();
+                         break;
                      case 3:
-                         lector.Listado();
+                         lector.listado();
                          System.out.println("INGRESE 0: para regresar al menu");
                          opcion = entrada.nextInt();
+                         break;
+                     case 4:
+                         System.out.println("LOS 5 NOMBRES MAS REPETIDOS EN RIVER SON:");
+                         lector.nombresRiver();
+                         System.out.println("INGRESE 0: para regresar al menu");
+                         break;
+                     case 5:
+                         lector.ordenarClubes();
+                         System.out.println("INGRESE 0: para regresar al menu");
+                         opcion = entrada.nextInt();
+                         break;
                         
          }
             
