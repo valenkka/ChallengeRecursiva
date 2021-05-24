@@ -67,7 +67,7 @@ public class LectorCSV {
 
         Arrays.sort(sociosCE); //ordena los socios de menor a mayor segun la edad
         for (int i = 0; i < CANT_LISTADO; i++) {
-            System.out.println("NOMBRE: " + sociosCE[i].getNombre() + ", EDAD: " + sociosCE[i].getEdad() + ",EQUIPO: " + sociosCE[i].getClub() + ", CONTADOR: " + (i + 1));
+            System.out.println("NOMBRE: " + sociosCE[i].getNombre() + ", EDAD: " + sociosCE[i].getEdad() + ", EQUIPO: " + sociosCE[i].getClub());
         }
     }
 
@@ -116,8 +116,8 @@ public class LectorCSV {
     }
 
     public void nombresRiver() { //obtengo una sola ves los diferentes nombres que tienen los socios de river (usando un set que no guarda duplicados)
-        Set<String> nombresRiver = new HashSet<String>();
-        ArrayList<String> nombresRiverCompletos = new ArrayList();
+        Set<String> nombresRiver = new HashSet<String>();//en este set guardo los nombre de los socios de river(para que no se guarde mas de una ves el mismo)
+        ArrayList<String> nombresRiverCompletos = new ArrayList();//aca se guarda los nombre de todos los socios de river
         for (int i = 0; i < socios.size(); i++) {
             if (socios.get(i).getClub().equals("River")) {
                 nombresRiver.add(socios.get(i).getNombre());
@@ -130,8 +130,8 @@ public class LectorCSV {
 
     public void nombresRepetidos(ArrayList<String> nombresAux, ArrayList<String> nombresRiverCompletos) { //muestra los 5 nombres que mas se repitieron , con la cantidad de veces
         int contador;
-        String nomMasRepetido = "";
-        int masRepetido = 0;
+        String nomMasRepetido = "";//en este string vamos a guardar el nobmre que mas se repite
+        int masRepetido = 0; // en este int la cantidad de veces que se repite el nombre
         for (int y = 0; y < 5; y++) { //lo repite 5 veces asi muestra solo los 5 mas repetidos
             for (int i = 0; i < nombresAux.size(); i++) {
                 contador = 0;
@@ -140,14 +140,14 @@ public class LectorCSV {
                         contador++;
                     }
                 }
-                if (contador > masRepetido) {
+                if (contador > masRepetido) { //para quedarnos con el que mas se repite
                     masRepetido = contador;
                     nomMasRepetido = nombresAux.get(i);
                 }
             }
             nombresAux.remove(nomMasRepetido);//se borra el nombre mas repetido asi busca el que le sigue
             System.out.println("Nombre: " + nomMasRepetido + ", Se repitio: " + masRepetido + " veces.");
-            masRepetido = 0;
+            masRepetido = 0;//reiniciamos el  el mas repetido asi se puede obtener el proximo
         }
     }
 }
