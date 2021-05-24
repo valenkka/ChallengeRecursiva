@@ -26,42 +26,51 @@ public class ChallengeRecursiva {
                     + "| INGRESE 6: para salir del menu.                                                 |\n"
                     + " ---------------------------------------------------------------------------------\n"
                     + "INGRESE UN NUMERO:");
-           try {  //por si ingresan un char o string no se rompa el programa
+           try {  //si  ingresan un char o string no se rompa el programa
                opcion = entrada.nextInt();}
            catch(InputMismatchException ex){
-               System.out.println("¡ERROR DEBE INGRESAR UN NUMERO!");
                entrada.nextLine();
+               opcion = 0;
            }
             switch (opcion) {
+                case 0: //muestra la cantidad de socios en el archivo
+                    System.out.println("¡INGRESASTE UN NUMERO INVALIDO!");
+                    ChallengeRecursiva.main(args);
+                    entrada.next();
+                    break;
                 case 1: //muestra la cantidad de socios en el archivo
                     System.out.println("LA CANTIDAD TOTAL DE PERSONAS REGISTRADAS ES DE: " + lector.contadorSocios() + " Personas.");
-                    System.out.println("\nINGRESE UN NUMERO PARA REGRESAR AL MENU:");
+                    System.out.println("\nINGRESE UN NUMERO O LETRA PARA REGRESAR AL MENU:");
                     entrada.next();
                     break;
                 case 2: //muestra  el promedio de edad de los hinchas de racing
                     int promedioEdadRacing = lector.promedioEdadRacing();
                     System.out.println("EL PROMEDIO DE LA EDAD DE LOS SOCIOS DE RACING ES: " + promedioEdadRacing + " años.");
-                    System.out.println("\nINGRESE UN NUMERO PARA REGRESAR AL MENU:");
+                    System.out.println("\nINGRESE UN NUMERO O LETRA PARA REGRESAR AL MENU:");
                     entrada.next();
                     break;
                 case 3: //muestra las 100 primeras personas casadas y con estudios universitarios
                     lector.listado();
-                    System.out.println("\nINGRESE UN NUMERO PARA REGRESAR AL MENU:");
+                    System.out.println("\nINGRESE UN NUMERO O LETRA PARA REGRESAR AL MENU:");
                     entrada.next();
                     break;
                 case 4: //muestra los 5 nombres mas comunes en los hinchas de river
                     System.out.println("LOS 5 NOMBRES MAS REPETIDOS EN RIVER SON:");
                     lector.nombresRiver();
-                    System.out.println("\nINGRESE UN NUMERO PARA REGRESAR AL MENU:");
+                    System.out.println("\nINGRESE UN NUMERO O LETRA PARA REGRESAR AL MENU:");
                     entrada.next();
                     break;
                 case 5: //muestra las estadisticas de los clubes de mayor a menor
                     lector.ordenarClubes();
-                    System.out.println("\nINGRESE UN NUMERO PARA REGRESAR AL MENU:");
+                    System.out.println("\nINGRESE UN NUMERO O LETRA PARA REGRESAR AL MENU:");
                     entrada.next();
                     break;
             }
         }
-        System.out.println("¡EL PROGRAMA A FINALIZADO!");
+        if(opcion !=6){ //si se ingresa un numero que no esta en el menu y es ditinto a 6 vuelve a llamar al main y muestra error
+            System.out.println("¡INGRESASTE UN NUMERO INVALIDO!");
+            ChallengeRecursiva.main(args);
+        }
+        System.out.println("¡EL PROGRAMA A FINALIZADO!");//si se obtiene el 6
     }
 }
