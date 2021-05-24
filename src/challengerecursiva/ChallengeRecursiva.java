@@ -1,6 +1,7 @@
 package challengerecursiva;
 
 import java.io.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import manejoArchivos.LectorCSV;
 
@@ -24,7 +25,12 @@ public class ChallengeRecursiva {
                     + "| de sus socios, la menor edad registrada y la mayor edad registrada.             |\n"
                     + "| INGRESE 6: para salir del menu.                                                  |\n"
                     + " ---------------------------------------------------------------------------------");
-            opcion = entrada.nextInt();
+           try {  //por si ingresan un char o string no se rompa el programa
+               opcion = entrada.nextInt();}
+           catch(InputMismatchException ex){
+               System.out.println("¡ERROR DEBE INGRESAR UN NUMERO!");
+               entrada.nextLine();
+           }
             switch (opcion) {
                 case 1: //muestra la cantidad de socios en el archivo
                     System.out.println("LA CANTIDAD TOTAL DE PERSONAS REGISTRADAS ES DE: " + lector.contadorSocios() + " Personas.");
